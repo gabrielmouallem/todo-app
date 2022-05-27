@@ -1,5 +1,5 @@
 import { enablePromise, openDatabase, SQLiteDatabase } from 'react-native-sqlite-storage';
-import { ToDoItem } from '../models/todo-item';
+import { ToDoItem } from '../../models/todo-item';
 
 const tableName = 'todoData';
 

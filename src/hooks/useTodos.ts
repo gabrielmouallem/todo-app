@@ -6,7 +6,7 @@ import {
   getDBConnection,
   getTodoItems,
   saveTodoItems,
-} from '../services/db-service';
+} from '../services/database/db-service';
 
 interface IUseTodos {
   todos: ToDoItem[];
