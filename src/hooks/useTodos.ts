@@ -32,7 +32,7 @@ export const useTodos = (): IUseTodos => {
     }
   }, []);
 
-  const addTodo = async (value: string) => {
+  const addTodo = async (todo: string) => {
     if (!newTodo.trim()) return;
     try {
       const newTodos = [
@@ -43,13 +43,13 @@ export const useTodos = (): IUseTodos => {
               if (cur.id > acc.id) return cur;
               return acc;
             }).id + 1,
-          value: value,
+          todo: todo,
         },
       ];
       setTodos(newTodos);
       const db = await getDBConnection();
       await saveTodoItems(db, newTodos);
-      setNewTodo(value);
+      setNewTodo(todo);
     } catch (error) {
       console.error(error);
     }

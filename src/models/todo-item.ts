@@ -1,4 +1,4 @@
 export type ToDoItem = {
   id: number;
-  value: string;
+  todo: string;
 };
