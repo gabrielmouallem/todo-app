@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import * as firebase from 'firebase/app';
 import * as firestore from 'firebase/firestore';
+import { ToDoItem } from '../../models/todo-item';
 import {firebaseConfig} from './config';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -12,6 +13,8 @@ const db = firestore.getFirestore(app);
 
 const collection = (collectionName: string) =>
   firestore.collection(db, collectionName);
+
+const document = (collectionName: string, id: number) => firestore.doc(db, collectionName, id.toString());
 
 const getDocs = async (): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -26,13 +29,22 @@ const getDocs = async (): Promise<any> => {
   });
 };
 
-const addDoc = data => {
+const addDoc = (data: ToDoItem) => {
   return new Promise((resolve, reject) => {
     firestore
-      .addDoc(collection('Todos'), data)
+      .setDoc(document('Todos', data.id), data)
       .then(res => resolve(res))
       .catch(err => reject(err));
   });
 };
 
-export {collection, getDocs, addDoc};
+const deleteDoc = (id: number) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .deleteDoc(document('Todos', id))
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
+
+export {collection, getDocs, addDoc, deleteDoc};

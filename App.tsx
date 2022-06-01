@@ -1,26 +1,25 @@
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {useTodos} from './src/hooks/useTodos';
-import {getDocs} from './src/services/firebase/firebase-service';
 import LottieView from 'lottie-react-native';
 
 import space from './src/assets/space.json';
 import {Todo} from './App.styles';
 import FlatListBasics from './src/components/FlatListBasics/FlatListBasics';
 import SyncButton from './src/components/SyncButton/SyncButton';
+import { useSync } from './src/hooks/useSync';
 
 const App = () => {
   const {todos, loadDataCallback} = useTodos();
+  const {syncUpData} = useSync();
 
   useEffect(() => {
+    syncUpData();
     loadDataCallback();
-    getDocs()
-      .then(res => console.log({res}))
-      .catch(err => console.log({err}));
   }, []);
 
   useEffect(() => {
-    console.log({todos});
+    console.log("-----> Local Todos: ", todos);
   }, [todos]);
 
   return (

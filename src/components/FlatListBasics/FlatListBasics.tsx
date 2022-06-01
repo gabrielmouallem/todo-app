@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {FlatList} from 'react-native';
 import {ToDoItem} from '../../models/todo-item';
 import {FLBasics} from './FlatListBasics.styles';

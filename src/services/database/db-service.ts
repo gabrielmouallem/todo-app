@@ -11,7 +11,7 @@ export const getDBConnection = async () => {
 
 export const createTable = async (db: SQLiteDatabase) => {
   // create table if not exists
-  const query = `CREATE TABLE IF NOT EXISTS ${tableName}(todo VARCHAR(255) NOT NULL, is_completed BOOLEAN, locally_created BOOLEAN, locally_deleted BOOLEAN);`;
+  const query = `CREATE TABLE IF NOT EXISTS ${tableName}(todo VARCHAR(255) NOT NULL, is_completed BOOLEAN NOT NULL DEFAULT false, locally_created BOOLEAN NOT NULL DEFAULT true, locally_deleted BOOLEAN NOT NULL DEFAULT false);`;
 
   await db.executeSql(query);
 };
@@ -33,9 +33,10 @@ export const getTodoItems = async (db: SQLiteDatabase): Promise<ToDoItem[]> => {
 };
 
 export const saveTodoItems = async (db: SQLiteDatabase, todoItems: ToDoItem[]) => {
+  console.log("------------> ", todoItems.map(i => `(${i.id}, '${i.todo}', ${i.is_completed}, ${i.locally_created}, ${i.locally_deleted})`))
   const insertQuery =
-    `INSERT OR REPLACE INTO ${tableName}(rowid, todo) values` +
-    todoItems.map(i => `(${i.id}, '${i.todo}')`).join(',');
+    `INSERT OR REPLACE INTO ${tableName}(rowid, todo, is_completed, locally_created, locally_deleted) values` +
+    todoItems.map(i => `(${i.id}, '${i.todo}', ${i.is_completed}, ${i.locally_created}, ${i.locally_deleted})`).join(',');
 
   return db.executeSql(insertQuery);
 };
@@ -45,13 +46,18 @@ export const deleteTodoItem = async (db: SQLiteDatabase, id: number) => {
   await db.executeSql(deleteQuery);
 };
 
+export const syncUpNewTodoItem = async (db: SQLiteDatabase, id: number) => {
+  const query = `UPDATE ${tableName} SET locally_created = 0 WHERE rowid = ${id}`;
+  await db.executeSql(query);
+};
+
 export const checkTodoItem = async (db: SQLiteDatabase, id: number) => {
-  const query = `UPDATE ${tableName} SET is_completed = true WHERE rowid = ${id}`;
+  const query = `UPDATE ${tableName} SET is_completed = 1 WHERE rowid = ${id}`;
   await db.executeSql(query);
 };
 
 export const uncheckTodoItem = async (db: SQLiteDatabase, id: number) => {
-  const query = `UPDATE ${tableName} SET is_completed = false WHERE rowid = ${id}`;
+  const query = `UPDATE ${tableName} SET is_completed = 0 WHERE rowid = ${id}`;
   await db.executeSql(query);
 };
 
