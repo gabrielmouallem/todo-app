@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import NetInfo from '@react-native-community/netinfo';
+import App from '../../App';
 
 interface IUseNetInfo {
   isConnected: boolean;
