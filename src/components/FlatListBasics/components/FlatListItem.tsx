@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {FLBasics} from '../FlatListBasics.styles';
 import del from '../../../assets/delete.json';
 import check from '../../../assets/check.json';
