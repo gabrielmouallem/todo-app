@@ -11,7 +11,6 @@ export default function FlatListItem({item}: {item: ToDoItem}) {
   const LocalDB = useTodos();
 
   const [ifCheck, setCheck] = React.useState(!!item.is_completed);
-  const [ifDelete, setDelete] = React.useState(false);
   const checkRef = React.useRef<AnimatedLottieView>(null);
   const trashRef = React.useRef<AnimatedLottieView>(null);
 
@@ -25,19 +24,15 @@ export default function FlatListItem({item}: {item: ToDoItem}) {
     }
   }, [ifCheck]);
 
-  React.useEffect(() => {
-    if (ifDelete == true) {
-      trashRef.current.play();
-      LocalDB.updateItem(item.id, [{field: 'locally_deleted', value: 1}]);
-      LocalDB.loadDataCallback();
-    }
-  }, [ifDelete])
-
   const handleCheck = () => {
     setCheck(!ifCheck);
   };
   const handleTrash = () => {
-    setDelete(true);
+    trashRef.current.play();
+    setTimeout(()=> {
+      LocalDB.updateItem(item.id, [{field: 'locally_deleted', value: 1}]);
+      LocalDB.loadDataCallback();
+    }, 1200)
   };
 
   return (
