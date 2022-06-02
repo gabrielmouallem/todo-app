@@ -1,8 +1,6 @@
 import React from 'react';
 import {ToDoItem} from '../models/todo-item';
-import {
-  LocalDBService, UpdateFields,
-} from '../services/database/db-service';
+import {LocalDBService, UpdateFields} from '../services/database/db-service';
 
 interface IUseTodos {
   todos: ToDoItem[];
@@ -38,9 +36,9 @@ export const useTodosManager = (): IUseTodos => {
         resolve([]);
       } catch (error) {
         reject([]);
-        console.error("loadDataCallback ", {error});
+        console.error('loadDataCallback ', {error});
       }
-    })
+    });
   }, []);
 
   const addTodo = async (todo: string) => {
@@ -52,10 +50,7 @@ export const useTodosManager = (): IUseTodos => {
         locally_created: 1,
         locally_deleted: 0,
       };
-      const newTodos: ToDoItem[] = [
-        ...todos,
-        item
-      ];
+      const newTodos: ToDoItem[] = [...todos, item];
       setTodos(newTodos);
       const db = await LocalDBService.getDBConnection();
       await LocalDBService.saveTodoItems(db, [item]);
@@ -68,7 +63,18 @@ export const useTodosManager = (): IUseTodos => {
     try {
       const db = await LocalDBService.getDBConnection();
       await LocalDBService.updateTodoItem(db, id, data);
-      setTodos(todos => ([...todos.map(el => el.id === id ? {...el, locally_created: 0} : el)]));
+      setTodos(prevState =>
+        prevState.map(el => {
+          if (el.id === id) {
+            const result = {...el};
+            data.forEach(i => {
+              result[i.field] = i.value;
+            });
+            return result;
+          }
+          return el;
+        }),
+      );
     } catch (error) {
       console.error(error);
     }
@@ -78,7 +84,7 @@ export const useTodosManager = (): IUseTodos => {
     try {
       const db = await LocalDBService.getDBConnection();
       await LocalDBService.deleteTodoItem(db, id);
-      setTodos(todos => ([...todos.filter(el => el.id !== id)]));
+      setTodos(todos => [...todos.filter(el => el.id !== id)]);
     } catch (error) {
       console.error(error);
     }
@@ -91,7 +97,7 @@ export const useTodosManager = (): IUseTodos => {
       const db = await LocalDBService.getDBConnection();
       await LocalDBService.saveTodoItems(db, newTodos);
     } catch (error) {
-      console.error("syncDown ", {error});
+      console.error('syncDown ', {error});
     }
   };
 
@@ -114,7 +120,7 @@ function useTodos(): IUseTodos {
   return context;
 }
 
-const TodosContextProvider = ({ children }) => {
+const TodosContextProvider = ({children}) => {
   return (
     <TodosContext.Provider value={useTodosManager()}>
       {children}
@@ -122,6 +128,4 @@ const TodosContextProvider = ({ children }) => {
   );
 };
 
-export { TodosContextProvider, useTodos };
-
-
+export {TodosContextProvider, useTodos};
