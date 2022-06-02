@@ -1,6 +1,3 @@
 # todo-app
 
-* [x] Ajustar os models
-* [x] Limpar codigo
-* [ ] Criacao do sync pelo botao
-* [ ] Criacao do sync por tras dos panos
+## This is a offline first app using firebase and SQLite database!
