@@ -15,9 +15,6 @@ function SyncButton() {
       }
     } else if (load === true) {
       animateLottieLoad.current.play();
-      setTimeout(() => {
-        animateLottieLoad.current.reset();
-      }, 8000);
     }
   }, [load]);
 

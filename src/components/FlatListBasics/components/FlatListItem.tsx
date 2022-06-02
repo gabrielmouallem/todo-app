@@ -5,18 +5,39 @@ import check from '../../../assets/check.json';
 import {ToDoItem} from '../../../models/todo-item';
 import AnimatedLottieView from 'lottie-react-native';
 import {Button} from './FlatListItem.styles';
+import { useTodos } from '../../../hooks/useTodos';
 
 export default function FlatListItem({item}: {item: ToDoItem}) {
+  const LocalDB = useTodos();
+
+  const [ifCheck, setCheck] = React.useState(!!item.is_completed);
+  const [ifDelete, setDelete] = React.useState(false);
   const checkRef = React.useRef<AnimatedLottieView>(null);
   const trashRef = React.useRef<AnimatedLottieView>(null);
 
+  React.useEffect(() => {
+    if(ifCheck == true) {
+      checkRef.current.play();
+      LocalDB.updateItem(item.id, [{field: 'is_completed', value: 1}]);
+    } else {
+      checkRef.current.play(160, 0);
+      LocalDB.updateItem(item.id, [{field: 'is_completed', value: 0}]);
+    }
+  }, [ifCheck]);
+
   const handleCheck = () => {
-    item.is_completed = true;
-    checkRef.current.play(84, 201);
+    setCheck(!ifCheck);
   };
   const handleTrash = () => {
-    item.locally_deleted = true;
-    trashRef.current.play();
+    setDelete(!ifDelete);
+
+    if (ifDelete == true) {
+      trashRef.current.play();
+      LocalDB.updateItem(item.id, [{field: 'locally_deleted', value: 1}]);
+      LocalDB.loadDataCallback();
+    } else {
+      trashRef.current.play(71, 0);
+    }
   };
 
   return (

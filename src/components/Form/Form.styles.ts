@@ -1,13 +1,14 @@
 import styled from 'styled-components/native';
 
 const Button = styled.TouchableOpacity`
-  background-color: #103930;
+  background-color: #3E8777;
   border-radius: 5px;
   width: 100px;
   heigh: 60px;
   margin-top: 10px;
   justify-content: center;
   align-items: center;
+  border: 2px solid #103930;
 `;
 
 const ButtonText = styled.Text`
@@ -25,7 +26,7 @@ const Field = styled.TextInput`
   display: flex;
   flex-direction: row;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 2px solid #103930;
   width: 240px;
   height: 50px;
