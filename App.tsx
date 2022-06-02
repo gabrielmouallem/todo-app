@@ -7,6 +7,7 @@ import space from './src/assets/space.json';
 import {Todo} from './App.styles';
 import FlatListBasics from './src/components/FlatListBasics/FlatListBasics';
 import SyncButton from './src/components/SyncButton/SyncButton';
+import Form from './src/components/Form/Form';
 
 const App = () => {
   return (
@@ -15,6 +16,9 @@ const App = () => {
         <LottieView source={space} resizeMode="center" autoPlay loop />
         <View>
           <SyncButton />
+        </View>
+        <View>
+          <Form />
         </View>
         <Todo.Container>
           <FlatListBasics />
