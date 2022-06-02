@@ -1,4 +1,3 @@
-import {useNetInfo} from '@react-native-community/netinfo';
 import React from 'react';
 import loading from '../../assets/loading.json';
 import { useSync } from '../../hooks/useSync';

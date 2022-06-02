@@ -10,6 +10,7 @@ export const useSync = () => {
 
   React.useEffect(() => {
     if (isConnected) {
+      console.log("App is online, syncing data...")
       syncUpData();
       syncDownData();
     }
