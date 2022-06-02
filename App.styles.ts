@@ -6,12 +6,6 @@ const SafeView = styled.SafeAreaView`
     align-items: center;
 `;
 
-const Container = styled.View`
-    justify-content: center;
-    align-items: center;
-`;
-
 export const Todo =  {
     SafeView,
-    Container
 }

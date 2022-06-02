@@ -2,9 +2,7 @@ import styled from 'styled-components/native';
 import LottieView from 'lottie-react-native';
 
 const Container = styled.View`
-    justify-content: center;
-    align-items: center;
-    border: 1px solid red;
+    flex: 1;
 `;
 
 const Content = styled.View`

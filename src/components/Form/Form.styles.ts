@@ -18,7 +18,7 @@ const ButtonText = styled.Text`
 const Container = styled.View`
   justify-content: center;
   align-items: center;
-  /* padding-bottom: 20px; */
+  margin-bottom: 20px;
 `;
 
 const Field = styled.TextInput`

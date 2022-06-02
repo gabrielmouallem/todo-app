@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from 'react-native';
 import {TodosContextProvider} from './src/hooks/useTodos';
 import LottieView from 'lottie-react-native';
 
@@ -14,15 +13,9 @@ const App = () => {
     <TodosContextProvider>
       <Todo.SafeView>
         <LottieView source={space} resizeMode="center" autoPlay loop />
-        <View>
           <SyncButton />
-        </View>
-        <View>
           <Form />
-        </View>
-        <Todo.Container>
           <FlatListBasics />
-        </Todo.Container>
       </Todo.SafeView>
     </TodosContextProvider>
   );

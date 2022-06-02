@@ -24,7 +24,7 @@ const FlatListBasics = () => {
 
   return (
     <FLBasics.Container>
-      <ScrollView style={{height: '50%'}}>
+      <ScrollView>
         {todos.map(item => (
           <FlatListItem item={item} />
         ))}
