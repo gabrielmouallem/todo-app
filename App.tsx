@@ -8,6 +8,7 @@ import {Todo} from './App.styles';
 import FlatListBasics from './src/components/FlatListBasics/FlatListBasics';
 import SyncButton from './src/components/SyncButton/SyncButton';
 import { useSync } from './src/hooks/useSync';
+import Form from './src/components/Form/Form';
 
 const App = () => {
   const {todos, loadDataCallback} = useTodos();
@@ -27,6 +28,9 @@ const App = () => {
       <LottieView source={space} resizeMode="center" autoPlay loop />
       <View>
         <SyncButton />
+      </View>
+      <View>
+        <Form ></Form>
       </View>
       <Todo.Container>
         <FlatListBasics todos={todos} />

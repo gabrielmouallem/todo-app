@@ -2,8 +2,9 @@ import styled from 'styled-components/native';
 
 export const Button = {
   Container: styled.TouchableOpacity`
-    border: 2px solid white;
-    border-radius: 5px;
+    background-color: white;
+    border-radius: 70px;
+    padding: 0px;
     margin-right: 10px;
   `,
 };

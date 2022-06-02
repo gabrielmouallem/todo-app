@@ -2,7 +2,7 @@ import styled from 'styled-components/native/';
 import LottieView from 'lottie-react-native';
 
 const Container = styled.TouchableOpacity`
-    padding-top: 120px;
+    padding-top: 250px;
     z-index: 2;
 `;
 
