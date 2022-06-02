@@ -1,32 +1,37 @@
-import { useCallback } from 'react';
-import { useFirebase } from './useFirebase';
-import { useTodos } from './useTodos';
+import {useCallback} from 'react';
+import {useFirebase} from './useFirebase';
+import {useTodos} from './useTodos';
 
 export const useSync = () => {
+  const LocalDB = useTodos();
+  const Firestore = useFirebase();
 
-    const {loadDataCallback, syncUpNewItem, syncUpDeletedItem} = useTodos();
-    const {addDoc, deleteDoc} = useFirebase();
-    
-    const syncUpData = useCallback(async ()=> {
-        let todos = await loadDataCallback();
-        todos.filter(el => el.locally_deleted).forEach(el => {
-            console.error({el});
-            deleteDoc(el);
-            syncUpDeletedItem(el.id);
-        });
-        todos = await loadDataCallback();
-        todos.filter(el => el.locally_created || !el.locally_deleted).forEach(el => {
-            addDoc(el);
-            syncUpNewItem(el.id);
-        });
-    }, []);
+  const syncUpData = useCallback(async () => {
+    let todos = await LocalDB.loadDataCallback();
+    todos.forEach(el => {
+      if (el.locally_deleted) {
+        Firestore.deleteDoc(el);
+        LocalDB.deleteItem(el.id);
+      }
+      if (el.locally_created) {
+        Firestore.addDoc(el);
+        LocalDB.updateItem(el.id, [{field: 'locally_created', value: 0}]);
+      }
+    });
+  }, []);
 
-    const syncDownData = useCallback(()=> {
+  const syncDownData = useCallback(async () => {
+    const firestoreTodos = await Firestore.getDocs();
+    const localTodos = await LocalDB.loadDataCallback();
+    let syncData = [];
+    firestoreTodos.forEach(i => {
+        if (!localTodos.find(j => j.id === i.id)) syncData.push(i);
+    })
+    if (syncData.length) LocalDB.syncDown(syncData);
+  }, []);
 
-    }, []);
-
-    return {
-        syncUpData,
-        syncDownData,
-    }
-}
+  return {
+    syncUpData,
+    syncDownData,
+  };
+};

@@ -14,7 +14,7 @@ const db = firestore.getFirestore(app);
 const collection = (collectionName: string) =>
   firestore.collection(db, collectionName);
 
-const document = (collectionName: string, id: number) => firestore.doc(db, collectionName, id.toString());
+const document = (collectionName: string, id: string) => firestore.doc(db, collectionName, id);
 
 const getDocs = async (): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -38,7 +38,7 @@ const addDoc = (data: ToDoItem) => {
   });
 };
 
-const deleteDoc = (id: number) => {
+const deleteDoc = (id: string) => {
   return new Promise((resolve, reject) => {
     firestore
       .deleteDoc(document('Todos', id))

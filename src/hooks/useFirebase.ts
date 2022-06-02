@@ -6,10 +6,16 @@ export const useFirebase = () => {
 
     const [docs, setDocs] = useState<ToDoItem[]>([]);
 
-    const getDocs = useCallback(async () => {
+    const getDocs = useCallback(async (): Promise<ToDoItem[]> => {
+       return new Promise((resolve, reject) => {
         getFirestoreDocs().then(res => {
             setDocs(res);
+            resolve(res);
+        }).catch(err => {
+            console.error({err});
+            reject([]);
         })
+       })
     }, []);
 
     const addDoc = useCallback((_doc: ToDoItem) => {

@@ -1,5 +1,5 @@
 export type ToDoItem = {
-  id: number;
+  id: string;
   todo: string;
   is_completed: number;
   locally_created: number;

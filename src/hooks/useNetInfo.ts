@@ -12,8 +12,6 @@ export const useNetInfo = (): IUseNetInfo => {
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
-      console.log('Connection type', state.type);
-      console.log('Is connected?', state.isConnected);
     });
 
     return () => {
@@ -21,5 +19,7 @@ export const useNetInfo = (): IUseNetInfo => {
     };
   }, []);
 
-  return isConnected;
+  return {
+    isConnected
+  };
 };
