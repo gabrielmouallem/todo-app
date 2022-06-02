@@ -4,7 +4,6 @@ const Button = styled.TouchableOpacity`
   background-color: #3E8777;
   border-radius: 5px;
   width: 100px;
-  heigh: 60px;
   margin-top: 10px;
   justify-content: center;
   align-items: center;
@@ -19,7 +18,7 @@ const ButtonText = styled.Text`
 const Container = styled.View`
   justify-content: center;
   align-items: center;
-  padding-bottom: 70px;
+  /* padding-bottom: 20px; */
 `;
 
 const Field = styled.TextInput`
@@ -30,7 +29,7 @@ const Field = styled.TextInput`
   border: 2px solid #103930;
   width: 240px;
   height: 50px;
-  padding: 15px
+  padding: 15px;
   justify-content: center;
   align-items: center;
 `;

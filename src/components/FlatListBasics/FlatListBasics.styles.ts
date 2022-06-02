@@ -4,7 +4,7 @@ import LottieView from 'lottie-react-native';
 const Container = styled.View`
     justify-content: center;
     align-items: center;
-    padding-bottom: 30px;
+    border: 1px solid red;
 `;
 
 const Content = styled.View`
@@ -20,7 +20,6 @@ const Content = styled.View`
     padding: 15px;
     margin-left: auto;
     margin-right: auto;
-    position-relative;
 `;
 
 const Item = styled.Text`
@@ -32,12 +31,10 @@ const Item = styled.Text`
 
 const Checkbox = styled(LottieView)`
     width: 30px;
-    heigth: 30px;
 `;
 
 const Delete = styled(LottieView)`
     width: 30px;
-    heigth: 30px;
 `;
 
 export const FLBasics = {

@@ -1,25 +1,22 @@
 import {useNetInfo} from '@react-native-community/netinfo';
 import React from 'react';
 import loading from '../../assets/loading.json';
+import { useSync } from '../../hooks/useSync';
 import {SButton} from './SyncButton.styles';
 
+
 function SyncButton() {
-  const [load, setload] = React.useState(false);
-  const {isConnected} = useNetInfo();
+  const {syncUpData, syncDownData} = useSync();
   const animateLottieLoad = React.useRef(null);
 
-  React.useEffect(() => {
-    if (isConnected) {
-      if (load) {
-        animateLottieLoad.current.play(0, 44);
-      }
-    } else if (load === true) {
-      animateLottieLoad.current.play();
-    }
-  }, [load]);
+  const handleSync = () => {
+    animateLottieLoad.current.play(0, 44);
+    syncUpData();
+    syncDownData();
+  }
 
   return (
-    <SButton.Container onPress={() => setload(!load)}>
+    <SButton.Container onPress={handleSync}>
       <SButton.Sync
         source={loading}
         autoPlay={false}

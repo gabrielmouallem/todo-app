@@ -1,10 +1,19 @@
-import {useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {useFirebase} from './useFirebase';
 import {useTodos} from './useTodos';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export const useSync = () => {
   const LocalDB = useTodos();
   const Firestore = useFirebase();
+  const {isConnected} = useNetInfo();
+
+  React.useEffect(() => {
+    if (isConnected) {
+      syncUpData();
+      syncDownData();
+    }
+  }, [isConnected])
 
   const syncUpData = useCallback(async () => {
     let todos = await LocalDB.loadDataCallback();
@@ -13,7 +22,7 @@ export const useSync = () => {
         Firestore.deleteDoc(el);
         LocalDB.deleteItem(el.id);
       }
-      if (el.locally_created) {
+      else if (el.locally_created) {
         Firestore.addDoc(el);
         LocalDB.updateItem(el.id, [{field: 'locally_created', value: 0}]);
       }

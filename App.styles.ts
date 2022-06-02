@@ -9,7 +9,6 @@ const SafeView = styled.SafeAreaView`
 const Container = styled.View`
     justify-content: center;
     align-items: center;
-    padding-bottom: 70px;
 `;
 
 export const Todo =  {

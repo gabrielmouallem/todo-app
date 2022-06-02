@@ -1,34 +1,34 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, ScrollView} from 'react-native';
 import {FLBasics} from './FlatListBasics.styles';
 import FlatListItem from './components/FlatListItem';
-import { useTodos } from '../../hooks/useTodos';
-import { useSync } from '../../hooks/useSync';
-import { useNetInfo } from '@react-native-community/netinfo';
+import {useTodos} from '../../hooks/useTodos';
+import {useSync} from '../../hooks/useSync';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const FlatListBasics = () => {
-
   const {todos, loadDataCallback} = useTodos();
   const {syncUpData, syncDownData} = useSync();
-  const { isConnected } = useNetInfo();
+  const {isConnected} = useNetInfo();
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
     loadDataCallback();
   }, []);
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
     if (isConnected) {
-      syncDownData();
       syncUpData();
+      syncDownData();
     }
   }, [isConnected]);
 
   return (
     <FLBasics.Container>
-      <FlatList
-        data={todos}
-        renderItem={({item}) => <FlatListItem item={item} />}
-      />
+      <ScrollView style={{height: '50%'}}>
+        {todos.map(item => (
+          <FlatListItem item={item} />
+        ))}
+      </ScrollView>
     </FLBasics.Container>
   );
 };

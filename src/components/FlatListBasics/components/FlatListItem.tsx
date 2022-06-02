@@ -25,19 +25,19 @@ export default function FlatListItem({item}: {item: ToDoItem}) {
     }
   }, [ifCheck]);
 
-  const handleCheck = () => {
-    setCheck(!ifCheck);
-  };
-  const handleTrash = () => {
-    setDelete(!ifDelete);
-
+  React.useEffect(() => {
     if (ifDelete == true) {
       trashRef.current.play();
       LocalDB.updateItem(item.id, [{field: 'locally_deleted', value: 1}]);
       LocalDB.loadDataCallback();
-    } else {
-      trashRef.current.play(71, 0);
     }
+  }, [ifDelete])
+
+  const handleCheck = () => {
+    setCheck(!ifCheck);
+  };
+  const handleTrash = () => {
+    setDelete(true);
   };
 
   return (
