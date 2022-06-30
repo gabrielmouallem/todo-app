@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 const Button = styled.TouchableOpacity`
-  background-color: #3E8777;
+  background-color: #3e8777;
   border-radius: 5px;
   width: 100px;
   margin-top: 10px;
@@ -13,7 +13,7 @@ const Button = styled.TouchableOpacity`
 const ButtonText = styled.Text`
   color: white;
   font-weight: bold;
-  `;
+`;
 
 const Container = styled.View`
   justify-content: center;

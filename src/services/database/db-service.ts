@@ -1,5 +1,8 @@
-import { Value } from 'react-native-reanimated';
-import { enablePromise, openDatabase, SQLiteDatabase } from 'react-native-sqlite-storage';
+import {
+  enablePromise,
+  openDatabase,
+  SQLiteDatabase,
+} from 'react-native-sqlite-storage';
 import { ToDoItem } from '../../models/todo-item';
 
 export interface UpdateFields {
@@ -25,13 +28,15 @@ const createTable = async (db: SQLiteDatabase) => {
 const getTodoItems = async (db: SQLiteDatabase): Promise<ToDoItem[]> => {
   try {
     const todoItems: ToDoItem[] = [];
-    const results = await db.executeSql(`SELECT rowid as id, todo, is_completed, locally_created, locally_deleted FROM ${tableName}`);
-    results.forEach(result => {
+    const results = await db.executeSql(
+      `SELECT rowid as id, todo, is_completed, locally_created, locally_deleted FROM ${tableName}`
+    );
+    results.forEach((result) => {
       for (let index = 0; index < result.rows.length; index++) {
-        todoItems.push(result.rows.item(index))
+        todoItems.push(result.rows.item(index));
       }
     });
-    return todoItems.map(item => ({...item, id: `${item.id}`}));
+    return todoItems.map((item) => ({ ...item, id: `${item.id}` }));
   } catch (error) {
     console.error(error);
     throw Error('Failed to get todoItems !!!');
@@ -41,7 +46,12 @@ const getTodoItems = async (db: SQLiteDatabase): Promise<ToDoItem[]> => {
 const saveTodoItems = async (db: SQLiteDatabase, todoItems: ToDoItem[]) => {
   const insertQuery =
     `INSERT OR REPLACE INTO ${tableName}(rowid, todo, is_completed, locally_created, locally_deleted) values` +
-    todoItems.map(i => `(${i.id}, '${i.todo}', ${i.is_completed}, ${i.locally_created}, ${i.locally_deleted})`).join(',');
+    todoItems
+      .map(
+        (i) =>
+          `(${i.id}, '${i.todo}', ${i.is_completed}, ${i.locally_created}, ${i.locally_deleted})`
+      )
+      .join(',');
 
   return db.executeSql(insertQuery);
 };
@@ -51,8 +61,12 @@ const deleteTodoItem = async (db: SQLiteDatabase, id: string) => {
   await db.executeSql(deleteQuery);
 };
 
-const updateTodoItem = async (db: SQLiteDatabase, id: string, data: UpdateFields[]) => {
-  const clause = data.map(i => `${i.field} = ${i.value}`).join(', ');
+const updateTodoItem = async (
+  db: SQLiteDatabase,
+  id: string,
+  data: UpdateFields[]
+) => {
+  const clause = data.map((i) => `${i.field} = ${i.value}`).join(', ');
   const query = `UPDATE ${tableName} SET ${clause} WHERE rowid = ${id}`;
   await db.executeSql(query);
 };
@@ -69,5 +83,5 @@ export const LocalDBService = {
   updateTodoItem,
   getDBConnection,
   createTable,
-  deleteTable
-}
+  deleteTable,
+};

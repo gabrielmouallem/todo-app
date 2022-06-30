@@ -1,6 +1,6 @@
 import React from 'react';
-import {Forms} from './Form.styles';
-import {useTodos} from '../../hooks/useTodos';
+import { Forms } from './Form.styles';
+import { useTodos } from '../../hooks/useTodos';
 
 export default function Form() {
   const LocalDB = useTodos();
@@ -8,8 +8,8 @@ export default function Form() {
   const [text, settext] = React.useState('');
 
   const createTodo = () => {
-      LocalDB.addTodo(text);
-      settext('');
+    LocalDB.addTodo(text);
+    settext('');
   };
 
   return (
@@ -17,7 +17,8 @@ export default function Form() {
       <Forms.Field
         onChangeText={settext}
         value={text}
-        placeholder="O que você irá fazer hoje?"></Forms.Field>
+        placeholder="O que você irá fazer hoje?"
+      />
       <Forms.Button onPress={createTodo}>
         <Forms.ButtonText>Criar</Forms.ButtonText>
       </Forms.Button>
