@@ -17,7 +17,7 @@ const getDBConnection = async () => {
 
 const createTable = async (db: SQLiteDatabase) => {
   // create table if not exists
-  const query = `CREATE TABLE IF NOT EXISTS ${tableName}(todo VARCHAR(255) NOT NULL, is_completed BOOLEAN NOT NULL DEFAULT false, locally_created BOOLEAN NOT NULL DEFAULT true, locally_deleted BOOLEAN NOT NULL DEFAULT false);`;
+  const query = `CREATE TABLE IF NOT EXISTS ${tableName}(todo VARCHAR(255) NOT NULL, is_completed BOOLEAN NOT NULL DEFAULT false, locally_created BOOLEAN NOT NULL DEFAULT true, locally_deleted BOOLEAN NOT NULL DEFAULT false, locally_updated BOOLEAN NOT NULL DEFAULT false, group_id STRING DEFAULT NULL, group_name STRING DEFAULT NULL, group_color STRING DEFAULT NULL);`;
 
   await db.executeSql(query);
 };
@@ -25,7 +25,7 @@ const createTable = async (db: SQLiteDatabase) => {
 const getTodoItems = async (db: SQLiteDatabase): Promise<ToDoItem[]> => {
   try {
     const todoItems: ToDoItem[] = [];
-    const results = await db.executeSql(`SELECT rowid as id, todo, is_completed, locally_created, locally_deleted FROM ${tableName}`);
+    const results = await db.executeSql(`SELECT rowid as id, todo, is_completed, locally_created, locally_deleted, locally_updated, group_id, group_name, group_color FROM ${tableName}`);
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
         todoItems.push(result.rows.item(index))
@@ -40,9 +40,8 @@ const getTodoItems = async (db: SQLiteDatabase): Promise<ToDoItem[]> => {
 
 const saveTodoItems = async (db: SQLiteDatabase, todoItems: ToDoItem[]) => {
   const insertQuery =
-    `INSERT OR REPLACE INTO ${tableName}(rowid, todo, is_completed, locally_created, locally_deleted) values` +
-    todoItems.map(i => `(${i.id}, '${i.todo}', ${i.is_completed}, ${i.locally_created}, ${i.locally_deleted})`).join(',');
-
+    `INSERT OR REPLACE INTO ${tableName}(rowid, todo, is_completed, locally_created, locally_deleted, locally_updated, group_id, group_name, group_color) values` +
+    todoItems.map(i => `(${i.id}, '${i.todo}', ${i.is_completed}, ${i.locally_created}, ${i.locally_deleted}, ${i.locally_updated}, '${i.group_id}', '${i.group_name}', '${i.group_color}')`).join(',');
   return db.executeSql(insertQuery);
 };
 

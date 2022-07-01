@@ -1,12 +1,12 @@
 import React from 'react';
-import {FlatList, ScrollView} from 'react-native';
-import {FLBasics} from './FlatListBasics.styles';
-import FlatListItem from './components/FlatListItem';
+import {ScrollView} from 'react-native';
+import { Todos as Todo } from './Todos.styles';
+import TodoItem from './components/TodoItem';
 import {useTodos} from '../../hooks/useTodos';
 import {useSync} from '../../hooks/useSync';
 import {useNetInfo} from '@react-native-community/netinfo';
 
-const FlatListBasics = () => {
+const Todos = () => {
   const {todos, loadDataCallback} = useTodos();
   const {syncUpData, syncDownData} = useSync();
   const {isConnected} = useNetInfo();
@@ -23,14 +23,14 @@ const FlatListBasics = () => {
   }, [isConnected]);
 
   return (
-    <FLBasics.Container>
+    <Todo.Container>
       <ScrollView>
         {todos.map(item => (
-          <FlatListItem item={item} />
+          <TodoItem item={item} />
         ))}
       </ScrollView>
-    </FLBasics.Container>
+    </Todo.Container>
   );
 };
 
-export default React.memo(FlatListBasics);
+export default React.memo(Todos);

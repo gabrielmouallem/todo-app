@@ -5,7 +5,7 @@ const Container = styled.View`
     flex: 1;
 `;
 
-const Content = styled.View`
+const Content = styled.TouchableOpacity`
     background-color: #ECECEC;
     shadow-color: #000;
     shadow-offset: 0px 3px;
@@ -40,7 +40,7 @@ const Delete = styled(LottieView)`
     width: 30px;
 `;
 
-export const FLBasics = {
+export const Todos = {
     Container,
     Content,
     Item,

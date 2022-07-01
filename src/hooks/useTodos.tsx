@@ -49,6 +49,10 @@ export const useTodosManager = (): IUseTodos => {
         is_completed: 0,
         locally_created: 1,
         locally_deleted: 0,
+        locally_updated: 0,
+        group_id: undefined,
+        group_name: undefined,
+        group_color: undefined
       };
       const newTodos: ToDoItem[] = [...todos, item];
       setTodos(newTodos);
@@ -95,6 +99,7 @@ export const useTodosManager = (): IUseTodos => {
       if (!newTodos.length) return;
       setTodos(prevState => [...prevState, ...newTodos]);
       const db = await LocalDBService.getDBConnection();
+      console.log({newTodos});
       await LocalDBService.saveTodoItems(db, newTodos);
     } catch (error) {
       console.error('syncDown ', {error});

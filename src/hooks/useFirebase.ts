@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { ToDoItem } from '../models/todo-item';
-import { getDocs as getFirestoreDocs, addDoc as addFirestoreDoc, deleteDoc as deleteFirestoreDoc } from '../services/firebase/firebase-service';
+import { getDocs as getFirestoreDocs, addDoc as addFirestoreDoc, updateDoc as updateFirestoreDoc, deleteDoc as deleteFirestoreDoc } from '../services/firebase/firebase-service';
 
 export const useFirebase = () => {
 
@@ -18,8 +18,16 @@ export const useFirebase = () => {
        })
     }, []);
 
+    const updateDoc = useCallback((_doc: ToDoItem) => {
+        const doc = {..._doc, locally_created: 0, locally_deleted: 0, locally_updated: 0};
+        updateFirestoreDoc(doc).then(() => {
+            console.log("Document added to firebase");
+            setDocs([...docs, ]);
+        }).catch(err => console.error("Error updating doc to firebase: ", err));
+    }, []);
+
     const addDoc = useCallback((_doc: ToDoItem) => {
-        const doc = {..._doc, locally_created: 0, locally_deleted: 0};
+        const doc = {..._doc, locally_created: 0, locally_deleted: 0, locally_updated: 0};
         addFirestoreDoc(doc).then(() => {
             console.log("Document added to firebase");
             setDocs([...docs, ]);
@@ -27,7 +35,7 @@ export const useFirebase = () => {
     }, []);
 
     const deleteDoc = useCallback((_doc: ToDoItem) => {
-        const doc = {..._doc, locally_created: 0, locally_deleted: 0};
+        const doc = {..._doc, locally_created: 0, locally_deleted: 0, locally_updated: 0};
         deleteFirestoreDoc(doc.id).then(() => {
             setDocs([...docs]);
         });
@@ -38,5 +46,6 @@ export const useFirebase = () => {
         getDocs,
         deleteDoc,
         addDoc,
+        updateDoc,
     }
 }

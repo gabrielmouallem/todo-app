@@ -33,13 +33,13 @@ const ButtonContainer = styled.TouchableOpacity`
 `;
 
 const ButtonText = styled.Text`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
   opacity: 0.3;
 `;
 
 const Title = styled.Text`
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
   text-align: center;
 `;

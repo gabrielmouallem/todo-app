@@ -1,5 +1,5 @@
 import React, {forwardRef, useImperativeHandle, useState} from 'react';
-import {Modal, ModalProps} from 'react-native';
+import {GestureResponderEvent, Modal, ModalProps} from 'react-native';
 import { CButton, CModal } from './CustomModal.styles';
 
 export interface ModalRef {
@@ -21,11 +21,19 @@ const CustomModal: React.ForwardRefRenderFunction<ModalRef, CustomModalProps> = 
 ) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
-  const open = () => {
+  const open = (e: GestureResponderEvent | undefined = undefined) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setIsVisible(true);
   }
 
-  const close = () => {
+  const close = (e: GestureResponderEvent | undefined = undefined) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setIsVisible(false);
   }
 
@@ -39,8 +47,8 @@ const CustomModal: React.ForwardRefRenderFunction<ModalRef, CustomModalProps> = 
   }));
 
   return (
-    <Modal visible={isVisible} transparent {...rest} >
-      <CModal.Backdrop>
+    <Modal visible={isVisible} transparent animationType='fade' {...rest} >
+      <CModal.Backdrop onTouchEnd={close}>
         <CModal.Container>
           <CModal.Header>
             <CButton.Container onPress={close}>

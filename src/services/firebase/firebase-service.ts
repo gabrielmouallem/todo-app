@@ -38,6 +38,15 @@ const addDoc = (data: ToDoItem) => {
   });
 };
 
+const updateDoc = (data: ToDoItem) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .updateDoc(document('Todos', data.id), data)
+      .then(res => resolve(res))
+      .catch(err => reject(err));
+  });
+};
+
 const deleteDoc = (id: string) => {
   return new Promise((resolve, reject) => {
     firestore
@@ -47,4 +56,4 @@ const deleteDoc = (id: string) => {
   });
 };
 
-export {collection, getDocs, addDoc, deleteDoc};
+export {collection, getDocs, addDoc, updateDoc, deleteDoc};
