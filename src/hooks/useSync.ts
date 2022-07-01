@@ -18,7 +18,7 @@ export const useSync = () => {
 
   const syncUpData = useCallback(async () => {
     let todos = await LocalDB.loadDataCallback();
-    todos.forEach((el) => {
+    todos.forEach(el => {
       if (el.locally_deleted) {
         Firestore.deleteDoc(el);
         LocalDB.deleteItem(el.id);
@@ -36,8 +36,8 @@ export const useSync = () => {
     const firestoreTodos = await Firestore.getDocs();
     const localTodos = await LocalDB.loadDataCallback();
     let syncData = [];
-    firestoreTodos.forEach((i) => {
-      if (!localTodos.find((j) => j.id === i.id)) {
+    firestoreTodos.forEach(i => {
+      if (!localTodos.find(j => j.id === i.id)) {
         syncData.push(i);
       }
     });

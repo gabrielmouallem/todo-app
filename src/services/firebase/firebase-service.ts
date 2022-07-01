@@ -21,12 +21,12 @@ const getDocs = async (): Promise<any> => {
   return new Promise((resolve, reject) => {
     firestore
       .getDocs(collection('Todos'))
-      .then((res) => {
+      .then(res => {
         const response = [];
-        res.forEach((data) => response.push(data.data()));
+        res.forEach(data => response.push(data.data()));
         resolve(response);
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 };
 
@@ -34,8 +34,8 @@ const addDoc = (data: ToDoItem) => {
   return new Promise((resolve, reject) => {
     firestore
       .setDoc(document('Todos', data.id), data)
-      .then((res) => resolve(res))
-      .catch((err) => reject(err));
+      .then(res => resolve(res))
+      .catch(err => reject(err));
   });
 };
 
@@ -43,8 +43,8 @@ const deleteDoc = (id: string) => {
   return new Promise((resolve, reject) => {
     firestore
       .deleteDoc(document('Todos', id))
-      .then((res) => resolve(res))
-      .catch((err) => reject(err));
+      .then(res => resolve(res))
+      .catch(err => reject(err));
   });
 };
 

@@ -63,17 +63,17 @@ export const useTodosManager = (): IUseTodos => {
     try {
       const db = await LocalDBService.getDBConnection();
       await LocalDBService.updateTodoItem(db, id, data);
-      setTodos((prevState) =>
-        prevState.map((el) => {
+      setTodos(prevState =>
+        prevState.map(el => {
           if (el.id === id) {
             const result = { ...el };
-            data.forEach((i) => {
+            data.forEach(i => {
               result[i.field] = i.value;
             });
             return result;
           }
           return el;
-        })
+        }),
       );
     } catch (error) {
       console.error(error);
@@ -84,7 +84,7 @@ export const useTodosManager = (): IUseTodos => {
     try {
       const db = await LocalDBService.getDBConnection();
       await LocalDBService.deleteTodoItem(db, id);
-      setTodos((todoList) => [...todoList.filter((el) => el.id !== id)]);
+      setTodos(todoList => [...todoList.filter(el => el.id !== id)]);
     } catch (error) {
       console.error(error);
     }
@@ -95,7 +95,7 @@ export const useTodosManager = (): IUseTodos => {
       if (!newTodos.length) {
         return;
       }
-      setTodos((prevState) => [...prevState, ...newTodos]);
+      setTodos(prevState => [...prevState, ...newTodos]);
       const db = await LocalDBService.getDBConnection();
       await LocalDBService.saveTodoItems(db, newTodos);
     } catch (error) {
@@ -104,7 +104,7 @@ export const useTodosManager = (): IUseTodos => {
   };
 
   return {
-    todos: todos.filter((el) => !el.locally_deleted),
+    todos: todos.filter(el => !el.locally_deleted),
     loadDataCallback,
     syncDown,
     updateItem,

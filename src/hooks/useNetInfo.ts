@@ -9,7 +9,7 @@ export const useNetInfo = (): IUseNetInfo => {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
+    const unsubscribe = NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
     });
 

@@ -13,7 +13,7 @@ const FlatListBasics = () => {
 
   React.useEffect(() => {
     loadDataCallback();
-  }, );
+  }, []);
 
   React.useEffect(() => {
     if (isConnected) {
@@ -25,7 +25,7 @@ const FlatListBasics = () => {
   return (
     <FLBasics.Container>
       <ScrollView>
-        {todos.map((item) => (
+        {todos.map(item => (
           <FlatListItem item={item} />
         ))}
       </ScrollView>

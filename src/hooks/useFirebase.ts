@@ -12,11 +12,11 @@ export const useFirebase = () => {
   const getDocs = useCallback(async (): Promise<ToDoItem[]> => {
     return new Promise((resolve, reject) => {
       getFirestoreDocs()
-        .then((res) => {
+        .then(res => {
           setDocs(res);
           resolve(res);
         })
-        .catch((err) => {
+        .catch(err => {
           console.error({ err });
           reject([]);
         });
@@ -30,7 +30,7 @@ export const useFirebase = () => {
         console.log('Document added to firebase');
         setDocs([...docs]);
       })
-      .catch((err) => console.error('Error adding doc to firebase: ', err));
+      .catch(err => console.error('Error adding doc to firebase: ', err));
   }, []);
 
   const deleteDoc = useCallback((_doc: ToDoItem) => {
