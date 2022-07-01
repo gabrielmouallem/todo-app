@@ -15,12 +15,14 @@ export default function FlatListItem({ item }: { item: ToDoItem }) {
   const trashRef = React.useRef<AnimatedLottieView>(null);
 
   React.useEffect(() => {
-    if (ifCheck === true) {
-      checkRef.current.play();
-      LocalDB.updateItem(item.id, [{ field: 'is_completed', value: 1 }]);
-    } else {
-      checkRef.current.play(160, 0);
-      LocalDB.updateItem(item.id, [{ field: 'is_completed', value: 0 }]);
+    if (checkRef.current !== null) {
+      if (ifCheck === true) {
+        checkRef.current.play();
+        LocalDB.updateItem(item.id, [{ field: 'is_completed', value: 1 }]);
+      } else {
+        checkRef.current.play(160, 0);
+        LocalDB.updateItem(item.id, [{ field: 'is_completed', value: 0 }]);
+      }
     }
   }, [ifCheck]);
 
@@ -28,11 +30,13 @@ export default function FlatListItem({ item }: { item: ToDoItem }) {
     setCheck(!ifCheck);
   };
   const handleTrash = () => {
-    trashRef.current.play();
-    setTimeout(() => {
-      LocalDB.updateItem(item.id, [{ field: 'locally_deleted', value: 1 }]);
-      LocalDB.loadDataCallback();
-    }, 1200);
+    if (trashRef.current !== null) {
+      trashRef.current.play();
+      setTimeout(() => {
+        LocalDB.updateItem(item.id, [{ field: 'locally_deleted', value: 1 }]);
+        LocalDB.loadDataCallback();
+      }, 1200);
+    }
   };
 
   return (
