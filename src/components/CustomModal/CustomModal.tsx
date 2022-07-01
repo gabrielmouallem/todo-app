@@ -19,7 +19,7 @@ const CustomModal: React.ForwardRefRenderFunction<ModalRef, CustomModalProps> = 
   },
   ref,
 ) => {
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const open = () => {
     setIsVisible(true);
