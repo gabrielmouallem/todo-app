@@ -99,7 +99,6 @@ export const useTodosManager = (): IUseTodos => {
       if (!newTodos.length) return;
       setTodos(prevState => [...prevState, ...newTodos]);
       const db = await LocalDBService.getDBConnection();
-      console.log({newTodos});
       await LocalDBService.saveTodoItems(db, newTodos);
     } catch (error) {
       console.error('syncDown ', {error});
