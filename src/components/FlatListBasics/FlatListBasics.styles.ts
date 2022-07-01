@@ -6,7 +6,12 @@ const Container = styled.View`
 `;
 
 const Content = styled.View`
-    background-color: #8AD5C4;
+    background-color: #ECECEC;
+    shadow-color: #000;
+    shadow-offset: 0px 3px;
+    shadow-opacity: 0.2;
+    shadow-radius: 2;
+    elevation: 1;
     max-height: 50px;
     margin: 15px;
     display: flex;
