@@ -63,10 +63,7 @@ export default function FlatListItem({item}: {item: ToDoItem}) {
   return (
     <>
       <CustomModal title={item.todo} ref={modalRef}>
-        <Todos.Item>{item.group_color}</Todos.Item>
-        <Todos.Item>{item.group_id}</Todos.Item>
-        <Todos.Item>{item.group_name}</Todos.Item>
-        <GroupForm />
+        <GroupForm todo={item} />
       </CustomModal>
       <Todos.Content onPress={onPress}>
         <Todos.Item>{item.todo}</Todos.Item>

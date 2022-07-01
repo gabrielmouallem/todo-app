@@ -22,19 +22,16 @@ const CustomModal: React.ForwardRefRenderFunction<ModalRef, CustomModalProps> = 
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const open = (e: GestureResponderEvent | undefined = undefined) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
     setIsVisible(true);
   }
 
   const close = (e: GestureResponderEvent | undefined = undefined) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
     setIsVisible(false);
+  }
+
+  const handlePreventPropagation = (e: GestureResponderEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
   }
 
   useImperativeHandle(ref, () => ({
@@ -49,7 +46,7 @@ const CustomModal: React.ForwardRefRenderFunction<ModalRef, CustomModalProps> = 
   return (
     <Modal visible={isVisible} transparent animationType='fade' {...rest} >
       <CModal.Backdrop onTouchEnd={close}>
-        <CModal.Container>
+        <CModal.Container onTouchEnd={handlePreventPropagation}>
           <CModal.Header>
             <CButton.Container onPress={close}>
               <CButton.Text>X</CButton.Text>
