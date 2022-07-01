@@ -9,6 +9,10 @@ const Backdrop = styled.View`
 
 const Container = styled.View`
   width: 90%;
+  shadow-color: #000;
+  shadow-offset: 0px 3px;
+  shadow-opacity: 0.2;
+  shadow-radius: 2;
   height: auto;
   background-color: white;
   border-radius: 25px;
