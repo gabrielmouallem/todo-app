@@ -1,26 +1,27 @@
 import React from 'react';
 import {Forms} from './Form.styles';
 import {useTodos} from '../../hooks/useTodos';
+import CustomButton from '../CustomButton/CustomButton';
+import CustomInput from '../CustomInput/CustomInput';
 
 export default function Form() {
   const LocalDB = useTodos();
 
-  const [text, settext] = React.useState('');
+  const [text, setText] = React.useState('');
 
   const createTodo = () => {
-      LocalDB.addTodo(text);
-      settext('');
+    LocalDB.addTodo(text);
+    setText('');
   };
 
   return (
     <Forms.Container>
-      <Forms.Field
-        onChangeText={settext}
+      <CustomInput
+        onChangeText={setText}
         value={text}
-        placeholder="O que você irá fazer hoje?"></Forms.Field>
-      <Forms.Button onPress={createTodo}>
-        <Forms.ButtonText>Criar</Forms.ButtonText>
-      </Forms.Button>
+        placeholder="O que você irá fazer hoje?"
+      />
+      <CustomButton onPress={createTodo}>Criar</CustomButton>
     </Forms.Container>
   );
 }
